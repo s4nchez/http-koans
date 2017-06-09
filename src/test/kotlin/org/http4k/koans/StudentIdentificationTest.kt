@@ -6,18 +6,11 @@ import org.http4k.core.Method.GET
 import org.http4k.core.Request
 import org.http4k.core.Response
 import org.http4k.core.Status.Companion.OK
-import org.http4k.core.Status.Companion.UNAUTHORIZED
 import org.http4k.core.Uri
 import org.junit.Test
 
 class StudentIdentificationTest {
     val koans = HttpKoans({ _: Request -> Response(OK) })
-
-    @Test
-    fun `requires referer identification`() {
-        val response = koans(Request(GET, "/"))
-        assertThat(response.status, equalTo(UNAUTHORIZED))
-    }
 
     @Test
     fun `request works if header is present`() {
