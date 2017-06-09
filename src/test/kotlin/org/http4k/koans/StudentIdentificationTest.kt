@@ -36,3 +36,5 @@ class StudentIdentificationTest {
         Request(GET, "/").studentServer()
     }
 }
+
+fun Request.testStudentServer(server: String): Request = header("referer", server)

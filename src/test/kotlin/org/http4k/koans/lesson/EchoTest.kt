@@ -7,6 +7,7 @@ import org.http4k.core.Request
 import org.http4k.core.Response
 import org.http4k.core.Status
 import org.http4k.koans.student.ReferenceStudent
+import org.http4k.koans.testStudentServer
 import org.junit.Test
 
 class EchoTest {
@@ -29,5 +30,3 @@ class EchoTest {
         assertThat(response.status, equalTo(Status.Companion.INTERNAL_SERVER_ERROR))
     }
 }
-
-private fun Request.testStudentServer(server: String): Request = header("referer", server)

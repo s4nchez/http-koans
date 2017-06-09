@@ -17,9 +17,9 @@ object Echo {
             val message = UUID.randomUUID().toString()
             val studentResponse = student(Request(GET, request.studentServer().path("/echo/$message")))
             if (studentResponse.status.successful && studentResponse.bodyString() == message) {
-                Response.Companion(OK)
+                Response(OK)
             } else {
-                Response.Companion(INTERNAL_SERVER_ERROR)
+                Response(INTERNAL_SERVER_ERROR)
             }
         })
 }

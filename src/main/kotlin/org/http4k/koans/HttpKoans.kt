@@ -7,6 +7,7 @@ import org.http4k.core.Status.Companion.OK
 import org.http4k.core.then
 import org.http4k.filter.DebuggingFilters
 import org.http4k.koans.lesson.Echo
+import org.http4k.koans.lesson.Repeat
 import org.http4k.koans.student.ReferenceStudent
 import org.http4k.routing.by
 import org.http4k.routing.routes
@@ -20,7 +21,8 @@ object HttpKoans {
         return DebuggingFilters.PrintRequestAndResponse()
             .then(routes(ReferenceStudent(),
                 "/" by welcome,
-                "/1" by StudentIdentification.then(Echo(student))
+                "/1" by StudentIdentification.then(Echo(student)),
+                "/2" by Repeat(student)
             ))
     }
 }
