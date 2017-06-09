@@ -1,4 +1,4 @@
-package org.http4k.koans
+package org.http4k.koans.lesson
 
 import com.natpryce.hamkrest.assertion.assertThat
 import com.natpryce.hamkrest.equalTo
@@ -17,16 +17,16 @@ class EchoTest {
 
         val response = echo(Request(GET, "/run").testStudentServer("/"))
 
-        assertThat(response.status, equalTo(Status.OK))
+        assertThat(response.status, equalTo(Status.Companion.OK))
     }
 
     @Test
     fun `when client fails to respond`() {
-        val echo = Echo({ _: Request -> Response(Status.OK) })
+        val echo = Echo({ _: Request -> Response.Companion(Status.Companion.OK) })
 
         val response = echo(Request(GET, "/run").testStudentServer("/"))
 
-        assertThat(response.status, equalTo(Status.INTERNAL_SERVER_ERROR))
+        assertThat(response.status, equalTo(Status.Companion.INTERNAL_SERVER_ERROR))
     }
 }
 
