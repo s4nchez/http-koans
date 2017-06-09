@@ -33,11 +33,8 @@ dependencies {
     compile "org.http4k:http4k-core:$http4k_version"
     compile "org.http4k:http4k-server-jetty:$http4k_version"
     compile "org.http4k:http4k-format-jackson:$http4k_version"
-    testCompile "org.http4k:http4k-client-okhttp:$http4k_version"
-    testCompile "org.http4k:http4k-client-apache:$http4k_version"
-    testCompile "org.http4k:http4k-server-jetty:$http4k_version"
-    testCompile "org.http4k:http4k-server-netty:$http4k_version"
-    testCompile "org.http4k:http4k-server-undertow:$http4k_version"
+    compile "org.http4k:http4k-client-okhttp:$http4k_version"
+    compile "org.http4k:http4k-server-jetty:$http4k_version"
 
     testCompile "junit:junit:4.11"
     testCompile "com.natpryce:hamkrest:1.3.0.0"
