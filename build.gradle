@@ -43,7 +43,7 @@ dependencies {
     testCompile "com.natpryce:hamkrest:1.3.0.0"
 }
 
-mainClassName = 'org.http4k.bin.HttpBinLauncherKt'
+mainClassName = 'org.http4k.koans.HttpKoansLauncherKt'
 
 jar {
     manifest {
