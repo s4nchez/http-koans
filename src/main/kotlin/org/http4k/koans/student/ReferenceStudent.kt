@@ -6,14 +6,14 @@ import org.http4k.core.Response
 import org.http4k.core.Status.Companion.OK
 import org.http4k.lens.Path
 import org.http4k.lens.int
-import org.http4k.routing.by
+import org.http4k.routing.bind
 import org.http4k.routing.path
 import org.http4k.routing.routes
 
 object ReferenceStudent {
     operator fun invoke() = routes(
-        "/echo/{message}" to GET by { request: Request -> Response(OK).body(request.path("message")!!) },
-        "/repeat/{times}/{message}" to GET by { request: Request ->
+        "/echo/{message}" to GET bind { request: Request -> Response(OK).body(request.path("message")!!) },
+        "/repeat/{times}/{message}" to GET bind { request: Request ->
             val timesLens = Path.int().of("times")
             val message = request.path("message")!!
             val times = timesLens.extract(request)

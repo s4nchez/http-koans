@@ -9,20 +9,20 @@ import org.http4k.filter.DebuggingFilters
 import org.http4k.koans.lesson.Echo
 import org.http4k.koans.lesson.Repeat
 import org.http4k.koans.student.ReferenceStudent
-import org.http4k.routing.by
+import org.http4k.routing.bind
 import org.http4k.routing.routes
 
 object HttpKoans {
 
     operator fun invoke(student: HttpHandler): HttpHandler {
 
-        val welcome = routes("/" to GET by { Response(OK) })
+        val welcome = routes("/" to GET bind { Response(OK) })
 
         return DebuggingFilters.PrintRequestAndResponse()
             .then(routes(ReferenceStudent(),
-                "/" by welcome,
-                "/1" by StudentIdentification.then(Echo(student)),
-                "/2" by Repeat(student)
+                "/" bind welcome,
+                "/1" bind StudentIdentification.then(Echo(student)),
+                "/2" bind Repeat(student)
             ))
     }
 }

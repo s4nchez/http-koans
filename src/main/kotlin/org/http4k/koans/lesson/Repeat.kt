@@ -6,14 +6,14 @@ import org.http4k.core.Request
 import org.http4k.core.Response
 import org.http4k.core.Status
 import org.http4k.koans.studentServer
-import org.http4k.routing.by
+import org.http4k.routing.bind
 import org.http4k.routing.routes
 import java.util.*
 
 object Repeat {
 
     operator fun invoke(student: HttpHandler, random: Random = Random()) =
-        routes("/run" to Method.GET by { request: Request ->
+        routes("/run" to Method.GET bind { request: Request ->
             val times = random.nextInt(5)
             val message = UUID.randomUUID().toString()
             val studentResponse = student(Request(Method.GET, request.studentServer().path("/repeat/$times/$message")))
