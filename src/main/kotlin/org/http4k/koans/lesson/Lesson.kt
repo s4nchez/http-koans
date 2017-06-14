@@ -40,11 +40,13 @@ object LessonRoutes {
 
                 val runResult = request.studentServer()
                     ?.let {
-                        val studentResponse = student(testRequest.uri(request.studentServer()!!.path(testRequest.uri.path)))
                         try {
+                            val studentResponse = student(testRequest.uri(request.studentServer()!!.path(testRequest.uri.path)))
                             evaluation(studentResponse)
                             Lesson.RunResult(success = true)
                         } catch(e: AssertionError) {
+                            Lesson.RunResult(success = false, explanation = e.message)
+                        } catch (e: Exception){
                             Lesson.RunResult(success = false, explanation = e.message)
                         }
                     } ?: Lesson.RunResult(false, explanation = "Student server is not defined")

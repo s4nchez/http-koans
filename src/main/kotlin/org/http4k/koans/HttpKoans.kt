@@ -16,8 +16,9 @@ object HttpKoans {
     val lessonLinks = lessons.map { LessonLink(it.name, it.lessonPath()) }
 
     operator fun invoke(student: HttpHandler): HttpHandler {
+        val loggedStudent = student
         val koanRoutes = listOf("/" bind Settings())
-            .plus(lessons.map { it.lessonPath() bind LessonRoutes(student, it.lessonPath(), it) })
+            .plus(lessons.map { it.lessonPath() bind LessonRoutes(loggedStudent, it.lessonPath(), it) })
 
         return DebuggingFilters.PrintRequestAndResponse()
             .then(routes(ReferenceStudent(), *koanRoutes.toTypedArray()))

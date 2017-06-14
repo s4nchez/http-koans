@@ -15,9 +15,10 @@ import org.http4k.routing.bind
 import org.http4k.routing.routes
 import org.http4k.template.HandlebarsTemplates
 
-val renderer = HandlebarsTemplates().HotReload("src/main/resources")
-
 object Settings {
+
+    val renderer = HandlebarsTemplates().HotReload("src/main/resources")
+
     operator fun invoke(): RoutingHttpHandler {
         return routes(
             "/" to GET bind { request: Request -> Response(Status.OK).body(renderer(View(request.studentServer()))) },
