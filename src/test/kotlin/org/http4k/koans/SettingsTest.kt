@@ -7,7 +7,7 @@ import org.http4k.core.Request
 import org.http4k.koans.student.ReferenceStudent
 import org.junit.Test
 
-class WelcomeTest {
+class SettingsTest {
 
     val koans = HttpKoans(ReferenceStudent())
 

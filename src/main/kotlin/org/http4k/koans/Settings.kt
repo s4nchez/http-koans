@@ -13,11 +13,10 @@ import org.http4k.routing.RoutingHttpHandler
 import org.http4k.routing.bind
 import org.http4k.routing.routes
 import org.http4k.template.HandlebarsTemplates
-import org.http4k.template.ViewModel
 
 val renderer = HandlebarsTemplates().HotReload("src/main/resources")
 
-object Welcome {
+object Settings {
     operator fun invoke(): RoutingHttpHandler {
         return routes(
             "/" to GET bind { request: Request -> Response(Status.OK).body(renderer(View(request.studentServer()))) },
@@ -29,7 +28,7 @@ object Welcome {
         )
     }
 
-    data class View(val studentServer: Uri?) : ViewModel
+    data class View(override val studentServer: Uri?) : KoanView
 }
 
 

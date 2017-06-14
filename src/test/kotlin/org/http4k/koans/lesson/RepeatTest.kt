@@ -13,7 +13,7 @@ class RepeatTest {
 
     @Test
     fun `repeats message n-times`(){
-        val repeat = Repeat(ReferenceStudent())
+        val repeat = LessonRoutes(ReferenceStudent(), "", Repeat)
 
         val response = repeat(Request(Method.GET, "/run").testStudentServer("/"))
 
