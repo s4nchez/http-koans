@@ -9,6 +9,7 @@ import org.http4k.core.Uri
 import org.http4k.core.body.form
 import org.http4k.core.cookie.Cookie
 import org.http4k.core.cookie.cookie
+import org.http4k.koans.HttpKoans.lessonLinks
 import org.http4k.routing.RoutingHttpHandler
 import org.http4k.routing.bind
 import org.http4k.routing.routes
@@ -28,7 +29,7 @@ object Settings {
         )
     }
 
-    data class View(override val studentServer: Uri?) : KoanView
+    data class View(override val studentServer: Uri?, override val lessons: List<LessonLink> = lessonLinks) : KoanView
 }
 
 

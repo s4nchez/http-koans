@@ -6,7 +6,9 @@ import org.http4k.core.Request
 import org.http4k.core.Response
 import org.http4k.core.Status
 import org.http4k.core.Uri
+import org.http4k.koans.HttpKoans.lessonLinks
 import org.http4k.koans.KoanView
+import org.http4k.koans.LessonLink
 import org.http4k.koans.studentServer
 import org.http4k.routing.RoutingHttpHandler
 import org.http4k.routing.bind
@@ -14,7 +16,7 @@ import org.http4k.routing.routes
 import org.http4k.template.HandlebarsTemplates
 
 object Lesson {
-    data class View(val lessonName: String, val runPath: String, override val studentServer: Uri?, val runResult: RunResult?) : KoanView
+    data class View(val lessonName: String, val runPath: String, override val studentServer: Uri?, val runResult: RunResult?, override val lessons: List<LessonLink> = lessonLinks) : KoanView
 
     data class RunResult(val success: Boolean, val explanation: String? = null)
 
