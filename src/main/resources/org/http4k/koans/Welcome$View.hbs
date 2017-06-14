@@ -1,0 +1,12 @@
+{{#*inline "content" }}
+    <h2>Setup</h2>
+    <p>Some of the <b>HTTP Koans</b> will attempt to make requests to a server you'll create (aka "student server").</p>
+    <form method="POST" action="/">
+        <div class="mdl-textfield mdl-js-textfield">
+            <input class="mdl-textfield__input" type="text" id="student-server" name="student-server" value="{{ studentServer }}">
+            <label class="mdl-textfield__label" for="student-server">Server URL (e.g. http://localhost:8000)</label>
+        </div>
+        <input type="submit" class="mdl-button mdl-js-button mdl-button--raised" value="Update">
+    </form>
+{{/inline}}
+{{> org/http4k/koans/Layout }}

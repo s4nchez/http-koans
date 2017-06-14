@@ -7,6 +7,8 @@ import org.http4k.core.Request
 import org.http4k.core.Response
 import org.http4k.core.Status.Companion.OK
 import org.http4k.core.Uri
+import org.http4k.core.cookie.cookie
+import org.http4k.koans.StudentIdentification.cookieName
 import org.junit.Test
 
 class StudentIdentificationTest {
@@ -14,20 +16,15 @@ class StudentIdentificationTest {
 
     @Test
     fun `request works if header is present`() {
-        val response = koans(Request(GET, "/").header("Referer", "anything"))
+        val response = koans(Request(GET, "/").cookie(cookieName, "anything"))
         assertThat(response.status, equalTo(OK))
     }
 
     @Test
     fun `student server uri can be retrieved via extension function`() {
-        val request = Request(GET, "/").header("Referer", "http://some_server:1234/aPath")
+        val request = Request(GET, "/").cookie(cookieName, "http://some_server:1234/aPath")
         assertThat(request.studentServer(), equalTo(Uri.of("http://some_server:1234")))
-    }
-
-    @Test(expected = IllegalStateException::class)
-    fun `breaks if student server is not available`() {
-        Request(GET, "/").studentServer()
     }
 }
 
-fun Request.testStudentServer(server: String): Request = header("referer", server)
+fun Request.testStudentServer(server: String): Request = cookie(cookieName, server)
