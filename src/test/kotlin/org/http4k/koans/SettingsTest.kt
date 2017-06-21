@@ -1,7 +1,6 @@
 package org.http4k.koans
 
-import com.natpryce.hamkrest.assertion.assertThat
-import com.natpryce.hamkrest.containsSubstring
+import com.natpryce.hamkrest.should.shouldMatch
 import org.http4k.core.Method
 import org.http4k.core.Request
 import org.http4k.koans.student.ReferenceStudent
@@ -14,13 +13,13 @@ class SettingsTest {
     @Test
     fun `by default server is unknown`() {
         val response = koans(Request(Method.GET, "/"))
-        assertThat(response.bodyString(), containsSubstring("unknown"))
+        response.html().shouldMatch(hasElement("#student-server", hasValue("")))
     }
 
     @Test
     fun `if server is set then it is displayed`(){
         val response = koans(Request(Method.GET, "/").testStudentServer("localhost:8081"))
-        assertThat(response.bodyString(), containsSubstring("localhost:8081"))
+        response.html().shouldMatch(hasElement("#student-server", hasValue("localhost:8081")))
     }
 }
 
