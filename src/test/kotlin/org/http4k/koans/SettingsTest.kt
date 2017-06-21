@@ -13,13 +13,13 @@ class SettingsTest {
     @Test
     fun `by default server is unknown`() {
         val response = koans(Request(Method.GET, "/"))
-        response.html().shouldMatch(hasElement("#student-server", hasValue("")))
+        response.html().shouldMatch(hasHtmlElement("#student-server", hasValue("")))
     }
 
     @Test
     fun `if server is set then it is displayed`(){
         val response = koans(Request(Method.GET, "/").testStudentServer("localhost:8081"))
-        response.html().shouldMatch(hasElement("#student-server", hasValue("localhost:8081")))
+        response.html().shouldMatch(hasHtmlElement("#student-server", hasValue("http://localhost:8081")))
     }
 }
 

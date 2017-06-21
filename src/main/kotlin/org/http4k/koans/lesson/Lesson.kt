@@ -18,7 +18,7 @@ import org.http4k.template.HandlebarsTemplates
 object Lesson {
     data class View(val lessonName: String, val runPath: String, override val studentServer: Uri?, val runResult: RunResult?, override val lessons: List<LessonLink> = lessonLinks) : KoanView
 
-    data class RunResult(val success: Boolean, val explanation: String? = null)
+    data class RunResult(val success: Boolean, val explanation: String? = null, val request: String, val response: String? = null)
 
 }
 
@@ -40,16 +40,17 @@ object LessonRoutes {
 
                 val runResult = request.studentServer()
                     ?.let {
+                        var studentResponse: Response? = null
                         try {
-                            val studentResponse = student(testRequest.uri(request.studentServer()!!.path(testRequest.uri.path)))
+                            studentResponse = student(testRequest.uri(request.studentServer()!!.path(testRequest.uri.path)))
                             evaluation(studentResponse)
-                            Lesson.RunResult(success = true)
+                            Lesson.RunResult(success = true, request = testRequest.toMessage(), response = studentResponse.toMessage())
                         } catch(e: AssertionError) {
-                            Lesson.RunResult(success = false, explanation = e.message)
+                            Lesson.RunResult(success = false, explanation = e.message, request = testRequest.toMessage(), response = studentResponse?.toMessage())
                         } catch (e: Exception){
-                            Lesson.RunResult(success = false, explanation = e.message)
+                            Lesson.RunResult(success = false, explanation = e.message, request = testRequest.toMessage(), response = studentResponse?.toMessage())
                         }
-                    } ?: Lesson.RunResult(false, explanation = "Student server is not defined")
+                    } ?: Lesson.RunResult(false, explanation = "Student server is not defined", request = testRequest.toMessage())
                 Response(Status.OK).body(renderer(Lesson.View(spec.name, "$basePath/run", request.studentServer(), runResult)))
             },
             "/" to Method.GET bind { request: Request -> Response(Status.OK).body(renderer(Lesson.View(spec.name, "$basePath/run", request.studentServer(), null))) })

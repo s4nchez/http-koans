@@ -4,6 +4,7 @@
     <p><button class="mdl-button mdl-js-button mdl-button--raised" onclick="window.location='{{runPath}}';">Run</button></p>
     {{#if runResult}}
         {{> org/http4k/koans/lesson/RunResult runResult}}
+        {{> org/http4k/koans/lesson/Roundtrip runResult}}
     {{/if}}
 {{/inline}}
 {{> org/http4k/koans/Layout }}

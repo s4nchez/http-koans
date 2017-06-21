@@ -1,6 +1,8 @@
 package org.http4k.koans
 
 import com.natpryce.hamkrest.Matcher
+import com.natpryce.hamkrest.anyElement
+import com.natpryce.hamkrest.anything
 import com.natpryce.hamkrest.equalTo
 import com.natpryce.hamkrest.has
 import com.natpryce.hamkrest.should.shouldMatch
@@ -13,7 +15,9 @@ import org.junit.Test
 
 fun Response.html(): Document = Jsoup.parse(bodyString())
 
-fun hasElement(selector: String, matcher: Matcher<Element>) = has("element", { doc: Document -> doc.selectSingle(selector) }, matcher)
+fun hasHtmlElement(selector: String) = has("element", { doc: Document -> doc.select(selector) }, anyElement(anything))
+
+fun hasHtmlElement(selector: String, matcher: Matcher<Element>) = has("element", { doc: Document -> doc.select(selector) }, anyElement(matcher))
 
 fun hasText(value: String) = hasText(equalTo(value))
 
@@ -22,8 +26,6 @@ fun hasText(matcher: Matcher<String>) = has("text", { element: Element -> elemen
 fun hasValue(value: String) = hasValue(equalTo(value))
 
 fun hasValue(matcher: Matcher<String>) = has("value", { element: Element -> element.attr("value") }, matcher)
-
-private fun Document.selectSingle(selector: String): Element = select(selector).singleOrNull() ?: throw IllegalArgumentException("not unique")
 
 class MatcherTests {
     private val response = Response(Status.OK).body(String(this.javaClass.getResourceAsStream("/test.html").readBytes()))
@@ -35,13 +37,18 @@ class MatcherTests {
 
     @Test
     fun `can match element value`() {
-        response.html().shouldMatch(hasElement("#myInput", hasValue(equalTo("myInputValue"))))
-        response.html().shouldMatch(hasElement("#myInput", hasValue("myInputValue")))
+        response.html().shouldMatch(hasHtmlElement("#myInput", hasValue(equalTo("myInputValue"))))
+        response.html().shouldMatch(hasHtmlElement("#myInput", hasValue("myInputValue")))
     }
 
     @Test
     fun `can match element text`() {
-        response.html().shouldMatch(hasElement("#myPara", hasText(equalTo("my text"))))
-        response.html().shouldMatch(hasElement("#myPara", hasText("my text")))
+        response.html().shouldMatch(hasHtmlElement("#myPara", hasText(equalTo("my text"))))
+        response.html().shouldMatch(hasHtmlElement("#myPara", hasText("my text")))
+    }
+
+    @Test
+    fun `can match on element presence`(){
+        response.html().shouldMatch(hasHtmlElement("#myPara"))
     }
 }
